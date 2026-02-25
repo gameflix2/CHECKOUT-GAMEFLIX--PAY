@@ -1,95 +1,41 @@
-/* --- ESTILO CHECKOUT GAMER --- */
+/* --- ESTILOS GERAIS (MANTENHA OS SEUS) --- */
+/* ... seu CSS de Desktop aqui ... */
+
+/* --- CHECKOUT GAMER --- */
 .checkout-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 3000;
-    backdrop-filter: blur(10px);
-    align-items: center;
-    justify-content: center;
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.95); z-index: 3000; backdrop-filter: blur(10px);
+    align-items: center; justify-content: center;
 }
-
 .checkout-card {
-    background: #181818;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 12px;
-    border: 1px solid #333;
-    padding: 25px;
-    position: relative;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    background: #181818; width: 90%; max-width: 400px; border-radius: 12px;
+    border: 1px solid #333; padding: 25px; color: white;
 }
-
-.checkout-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.brand-name { font-weight: bold; color: #fff; font-size: 1.2rem; }
 .red-text { color: #e50914; }
-.close-btn { background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
+.product-preview { display: flex; gap: 15px; background: #222; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+#checkout-img { width: 60px; height: 80px; object-fit: cover; }
+.input-group input { width: 100%; padding: 12px; margin-bottom: 10px; background: #333; border: none; color: white; border-radius: 4px; }
+.confirm-purchase-btn { width: 100%; padding: 15px; background: #e50914; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-.product-preview {
-    display: flex;
-    gap: 15px;
-    background: #222;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+/* --- AJUSTE MOBILE FINAL (PADRÃO NETFLIX) --- */
+@media (max-width: 768px) {
+    .top10-banner { margin-bottom: 20px !important; }
+    .row h2 { font-size: 1.1rem !important; margin-bottom: 10px !important; padding-left: 15px; }
+
+    .card-container {
+        position: relative; min-width: 45% !important; margin-right: 5px !important;
+        display: flex; align-items: center;
+    }
+    .rank-number {
+        font-size: 160px !important; position: absolute !important; left: -25px !important;
+        z-index: 1 !important; color: transparent !important;
+        -webkit-text-stroke: 2px #555 !important; font-weight: bold;
+    }
+    .poster-img {
+        z-index: 2 !important; position: relative; width: 100% !important;
+        height: 180px !important; object-fit: cover; margin-left: 35px;
+    }
+    .game-card { min-width: 31% !important; height: 160px !important; flex-shrink: 0; }
+    .games-scroll, .top-10-scroll { display: flex !important; overflow-x: auto !important; gap: 12px !important; padding: 10px 15px !important; }
+    .games-scroll::-webkit-scrollbar { display: none; }
 }
-
-#checkout-img { width: 80px; height: 110px; border-radius: 5px; object-fit: cover; }
-.product-details h3 { margin: 0; font-size: 1.1rem; color: #fff; }
-.status-online { color: #46d369; font-size: 0.8rem; margin-top: 5px; }
-
-.input-group label {
-    display: block;
-    color: #888;
-    font-size: 0.7rem;
-    margin-bottom: 5px;
-    letter-spacing: 1px;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 12px;
-    background: #333;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: #fff;
-    outline: none;
-}
-
-.input-group input:focus { border-color: #e50914; }
-
-.price-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 15px;
-    border-top: 1px solid #333;
-    margin-bottom: 20px;
-}
-
-.price-val { font-size: 1.5rem; font-weight: bold; color: #e50914; }
-
-.buy-now-btn {
-    width: 100%;
-    padding: 15px;
-    background: #e50914;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.buy-now-btn:hover { transform: scale(1.02); background: #f40a16; }
-
-.checkout-footer { text-align: center; margin-top: 15px; color: #666; font-size: 0.75rem; }
