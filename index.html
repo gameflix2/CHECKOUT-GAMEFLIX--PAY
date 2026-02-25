@@ -1,55 +1,231 @@
-<div id="checkoutGamer" class="checkout-overlay">
-    <div class="cakto-style-container">
-        <div class="step-bar">
-            <div class="step active"><span>1</span> Dados</div>
-            <div class="step-line"></div>
-            <div class="step"><span>2</span> Pagamento</div>
-        </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMEFLIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS GERAL (ESTILO GAMEFLIX) --- */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #141414;
+            color: white;
+            overflow-x: hidden;
+        }
 
-        <div class="checkout-flex">
-            <div class="checkout-side-info">
-                <div class="brand-header">
-                    <span class="logo-text">GAME<span class="red-text">FLIX</span></span>
-                </div>
-                <div class="product-box">
-                    <img id="checkout-img" src="" alt="Capa">
-                    <div class="product-txt">
-                        <h3 id="checkout-title">Nome do Jogo</h3>
-                        <p>Plano Premium - Acesso Vitalício</p>
-                        <span class="badge-instant">Entrega Instantânea</span>
+        .red-text { color: #e50914; }
+
+        /* Banner Principal */
+        .banner {
+            width: 100%;
+            height: 80vh;
+            position: relative;
+            background: #000;
+        }
+        #banner-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Top 10 e Seções */
+        .row { padding: 20px 50px; }
+        .row h2 { font-size: 1.5rem; margin-bottom: 20px; }
+        
+        .top-10-scroll, .games-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+        .top-10-scroll::-webkit-scrollbar, .games-scroll::-webkit-scrollbar { display: none; }
+
+        .card-container {
+            position: relative;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Números Top 10 - Padrão Netflix */
+        .rank-number {
+            font-size: 200px;
+            font-family: 'Bebas Neue', sans-serif;
+            position: absolute;
+            left: -30px;
+            bottom: -20px;
+            z-index: 1;
+            color: #141414;
+            -webkit-text-stroke: 3px #555;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .poster-img {
+            z-index: 2;
+            position: relative;
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            margin-left: 50px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .poster-img:hover { transform: scale(1.05); }
+
+        /* Checkout Estilo Cakto */
+        .checkout-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        .cakto-style-container {
+            background: #141414;
+            width: 95%;
+            max-width: 900px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+        }
+        .step-bar {
+            display: flex; align-items: center; justify-content: center; 
+            padding: 15px; background: #1a1a1a; gap: 10px; border-bottom: 1px solid #222;
+        }
+        .step { color: #555; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+        .step.active { color: #fff; font-weight: bold; }
+        .step span { background: #333; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .step.active span { background: #e50914; }
+        .step-line { width: 30px; height: 1px; background: #333; }
+
+        .checkout-flex { display: flex; flex-wrap: wrap; }
+        .checkout-side-info { flex: 1; min-width: 300px; padding: 30px; background: #111; }
+        .checkout-form-side { flex: 1.2; min-width: 300px; padding: 30px; position: relative; }
+
+        .input-group-cakto { margin-bottom: 15px; }
+        .input-group-cakto label { display: block; color: #888; font-size: 0.8rem; margin-bottom: 5px; }
+        .input-group-cakto input {
+            width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333;
+            border-radius: 6px; color: #fff; box-sizing: border-box;
+        }
+        .next-step-btn {
+            width: 100%; padding: 15px; background: #e50914; color: #fff; border: none;
+            border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+
+        .product-box { display: flex; gap: 15px; margin-bottom: 20px; }
+        #checkout-img { width: 60px; height: 85px; object-fit: cover; border-radius: 4px; }
+        .final-price { font-size: 1.5rem; font-weight: bold; color: #fff; display: block; }
+
+        .close-checkout {
+            position: absolute; top: 15px; right: 15px; background: none; border: none;
+            color: #666; font-size: 1.5rem; cursor: pointer;
+        }
+
+        /* --- AJUSTE MOBILE --- */
+        @media (max-width: 768px) {
+            .row { padding: 10px 15px; }
+            .rank-number { font-size: 130px; left: -20px; }
+            .poster-img { height: 160px; margin-left: 30px; }
+            .checkout-flex { flex-direction: column; }
+            .checkout-side-info { order: 2; }
+            .checkout-form-side { order: 1; }
+            .cakto-style-container { height: 100vh; border-radius: 0; overflow-y: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <video id="banner-video" autoplay muted>
+            <source src="SEU_VIDEO_AQUI.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="row">
+        <h2>Top 10 Jogos no Brasil Hoje</h2>
+        <div class="top-10-scroll">
+            <div class="card-container" onclick="toggleCheckout('Elden Ring', './elden.jpg')">
+                <div class="rank-number">1</div>
+                <img class="poster-img" src="./elden.jpg" alt="Jogo 1">
+            </div>
+            <div class="card-container" onclick="toggleCheckout('FIFA 24', './fifa.jpg')">
+                <div class="rank-number">2</div>
+                <img class="poster-img" src="./fifa.jpg" alt="Jogo 2">
+            </div>
+            </div>
+    </div>
+
+    <div id="checkoutGamer" class="checkout-overlay">
+        <div class="cakto-style-container">
+            <div class="step-bar">
+                <div class="step active"><span>1</span> Dados</div>
+                <div class="step-line"></div>
+                <div class="step"><span>2</span> Pagamento</div>
+            </div>
+            <div class="checkout-flex">
+                <div class="checkout-side-info">
+                    <span class="logo-text" style="font-weight:bold; font-size:1.2rem;">GAME<span class="red-text">FLIX</span></span>
+                    <div class="product-box">
+                        <img id="checkout-img" src="" alt="Capa">
+                        <div class="product-txt">
+                            <h3 id="checkout-title" style="margin:0;">Nome do Jogo</h3>
+                            <p style="font-size:0.8rem; color:#888;">Acesso Vitalício</p>
+                        </div>
+                    </div>
+                    <div class="total-box">
+                        <span style="color:#888; font-size:0.9rem;">Total:</span>
+                        <span class="final-price">R$ 29,90</span>
                     </div>
                 </div>
-                <div class="total-box">
-                    <span>Total a pagar:</span>
-                    <span class="final-price">R$ 29,90</span>
-                </div>
-            </div>
-
-            <div class="checkout-form-side">
-                <button class="close-checkout" onclick="toggleCheckout()">&times;</button>
-                <h3>Informações Pessoais</h3>
-                <p class="subtitle">Preencha os dados abaixo para receber seu acesso.</p>
-                
-                <div class="input-group-cakto">
-                    <label>Nome Completo</label>
-                    <input type="text" placeholder="Digite seu nome...">
-                </div>
-                <div class="input-group-cakto">
-                    <label>E-mail</label>
-                    <input type="email" placeholder="exemplo@email.com">
-                </div>
-                <div class="input-group-cakto">
-                    <label>WhatsApp (Opcional)</label>
-                    <input type="tel" placeholder="(00) 00000-0000">
-                </div>
-
-                <button class="next-step-btn">CONTINUAR PARA PAGAMENTO</button>
-                
-                <div class="secure-footer">
-                    <span>🔒 Ambiente Seguro</span>
-                    <span>⭐ Compra Garantida</span>
+                <div class="checkout-form-side">
+                    <button class="close-checkout" onclick="toggleCheckout()">&times;</button>
+                    <h3 style="margin-top:0;">Informações Pessoais</h3>
+                    <div class="input-group-cakto">
+                        <label>Nome Completo</label>
+                        <input type="text" placeholder="Digite seu nome">
+                    </div>
+                    <div class="input-group-cakto">
+                        <label>E-mail</label>
+                        <input type="email" placeholder="exemplo@email.com">
+                    </div>
+                    <button class="next-step-btn">CONTINUAR</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+        /* --- JS UNIFICADO --- */
+        function toggleCheckout(title = '', imgSrc = '') {
+            const modal = document.getElementById('checkoutGamer');
+            const isVisible = modal.style.display === 'flex';
+            modal.style.display = isVisible ? 'none' : 'flex';
+
+            if (title && !isVisible) {
+                document.getElementById('checkout-title').textContent = title;
+                document.getElementById('checkout-img').src = imgSrc;
+            }
+        }
+
+        // Som inteligente no Banner
+        const bannerVideo = document.getElementById("banner-video");
+        if (bannerVideo) {
+            bannerVideo.addEventListener("ended", () => {
+                bannerVideo.muted = true;
+                bannerVideo.play();
+            });
+        }
+    </script>
+</body>
+</html>
