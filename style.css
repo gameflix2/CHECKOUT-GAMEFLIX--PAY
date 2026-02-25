@@ -1,4 +1,4 @@
-/* --- ESTILOS GERAIS (MANTENHA OS SEUS) --- */
+J7JJJ/* --- ESTILOS GERAIS (MANTENHA OS SEUS) --- */
 /* ... seu CSS de Desktop aqui ... */
 
 /* --- CHECKOUT GAMER --- */
@@ -23,7 +23,7 @@
     .row h2 { font-size: 1.1rem !important; margin-bottom: 10px !important; padding-left: 15px; }
 
     .card-container {
-        position: relative; min-width: 45% !important; margin-right: 5px !important;
+ J7NU      position: relative; min-width: 45% !important; margin-right: 5px !important;
         display: flex; align-items: center;
     }
     .rank-number {
@@ -38,4 +38,62 @@
     .game-card { min-width: 31% !important; height: 160px !important; flex-shrink: 0; }
     .games-scroll, .top-10-scroll { display: flex !important; overflow-x: auto !important; gap: 12px !important; padding: 10px 15px !important; }
     .games-scroll::-webkit-scrollbar { display: none; }
+}
+
+/* --- CHECKOUT ESTILO CAKTO PARA GAMEFLIX --- */
+.checkout-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #0a0a0a; z-index: 5000; align-items: center; justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.cakto-style-container {
+    background: #141414; width: 100%; max-width: 900px; border-radius: 15px;
+    overflow: hidden; border: 1px solid #222; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+
+/* Barra de Passos */
+.step-bar {
+    display: flex; align-items: center; justify-content: center; 
+    padding: 20px; background: #1a1a1a; gap: 10px; border-bottom: 1px solid #222;
+}
+.step { color: #555; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
+.step.active { color: #fff; font-weight: bold; }
+.step span { background: #333; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.7rem; }
+.step.active span { background: #e50914; }
+.step-line { width: 40px; height: 2px; background: #333; }
+
+/* Layout Flex */
+.checkout-flex { display: flex; flex-wrap: wrap; }
+.checkout-side-info { flex: 1; min-width: 300px; padding: 40px; background: #111; }
+.checkout-form-side { flex: 1.2; min-width: 300px; padding: 40px; background: #141414; position: relative; }
+
+/* Estilo dos Inputs */
+.input-group-cakto { margin-bottom: 20px; }
+.input-group-cakto label { display: block; color: #bbb; font-size: 0.85rem; margin-bottom: 8px; }
+.input-group-cakto input {
+    width: 100%; padding: 14px; background: #1a1a1a; border: 1px solid #333;
+    border-radius: 8px; color: #fff; transition: 0.3s;
+}
+.input-group-cakto input:focus { border-color: #e50914; outline: none; background: #222; }
+
+/* Botão Próximo */
+.next-step-btn {
+    width: 100%; padding: 18px; background: #e50914; color: #fff; border: none;
+    border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px;
+}
+
+/* Info do Produto */
+.product-box { display: flex; gap: 15px; margin: 30px 0; padding-bottom: 20px; border-bottom: 1px solid #222; }
+#checkout-img { width: 70px; height: 95px; border-radius: 6px; object-fit: cover; }
+.badge-instant { background: rgba(70, 211, 105, 0.1); color: #46d369; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; }
+.final-price { font-size: 1.8rem; font-weight: bold; color: #fff; }
+
+.close-checkout { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #666; font-size: 1.5rem; cursor: pointer; }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .checkout-side-info { order: 2; padding: 25px; }
+    .checkout-form-side { order: 1; padding: 25px; }
+    .cakto-style-container { height: 100vh; border-radius: 0; }
 }
