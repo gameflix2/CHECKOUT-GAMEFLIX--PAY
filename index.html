@@ -1,64 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Jogos</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">GameCatalog</div>
-    <input type="text" id="search" placeholder="Buscar jogos..." />
-  </header>
+<div id="checkoutGamer" class="checkout-overlay">
+    <div class="checkout-card">
+        <div class="checkout-header">
+            <span class="brand-name">O ARSENAL <span class="red-text">DE GAMES</span></span>
+            <button class="close-btn" onclick="toggleCheckout()">&times;</button>
+        </div>
 
-  <!-- Filtros -->
-  <section class="filters">
-    <select id="genreFilter">
-      <option value="">Todos os gêneros</option>
-      <option value="RPG">RPG</option>
-      <option value="Ação">Ação</option>
-      <option value="FPS">FPS</option>
-      <option value="Aventura">Aventura</option>
-    </select>
-    <select id="platformFilter">
-      <option value="">Todas as plataformas</option>
-      <option value="PC">PC</option>
-      <option value="PS5">PS5</option>
-      <option value="Xbox">Xbox</option>
-    </select>
-  </section>
+        <div class="checkout-body">
+            <div class="product-preview">
+                <img id="checkout-img" src="" alt="Produto">
+                <div class="product-details">
+                    <h3 id="checkout-title">Nome do Jogo</h3>
+                    <p class="status-online">● Entrega Instantânea</p>
+                </div>
+            </div>
 
-  <!-- Grid de jogos -->
-  <main class="game-grid" id="gameGrid">
-    <!-- Jogos serão inseridos dinamicamente pelo JS -->
-  </main>
+            <div class="input-group">
+                <label>QUEM VAI RECEBER?</label>
+                <input type="text" placeholder="Seu nome completo">
+                <input type="email" placeholder="Seu melhor e-mail">
+            </div>
 
-  <!-- Modal de detalhes -->
-  <div class="modal" id="gameModal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modalImage" src="" alt="Capa do jogo">
-      <h2 id="modalTitle"></h2>
-      <p id="modalGenre"></p>
-      <p id="modalPlatform"></p>
-      <p id="modalRelease"></p>
-      <p id="modalDescription"></p>
-      <a id="modalTrailer" href="#" target="_blank" class="trailer-btn">Assistir Trailer</a>
+            <div class="price-section">
+                <span>Total:</span>
+                <span class="price-val">R$ 29,90</span>
+            </div>
+
+            <button class="buy-now-btn">FINALIZAR AGORA</button>
+        </div>
+        
+        <div class="checkout-footer">
+            <p>🛡️ Compra 100% Segura e Criptografada</p>
+        </div>
     </div>
-  </div>
-
-  <!-- Rodapé -->
-  <footer>
-    <p>© 2026 GameCatalog. Todos os direitos reservados.</p>
-    <div class="socials">
-      <a href="#">Twitter</a>
-      <a href="#">Instagram</a>
-      <a href="#">GitHub</a>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+</div>
