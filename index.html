@@ -196,7 +196,36 @@
 
         /* MOBILE */
         @media (max-width: 768px) {
-            .checkout-flex { flex-direction: column; }
+            .checkout-f/* MOBILE AJUSTADO - Produto em cima, Dados em baixo */
+@media (max-width: 768px) {
+    .checkout-flex { 
+        flex-direction: column-reverse; /* ISSO faz a mágica: inverte a ordem no celular */
+    }
+    
+    .product-sidebar { 
+        order: 1; 
+        border-right: none; 
+        border-bottom: 1px solid #222; 
+        padding: 25px; 
+    }
+    
+    .form-content { 
+        order: 2; 
+        padding: 30px 20px; 
+    }
+    
+    .checkout-container { 
+        border-radius: 0; 
+        width: 100%; 
+        margin-top: 40px; 
+    }
+
+    .logo-gameflix {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}lex { flex-direction: column; }
             .product-sidebar { order: 2; border-right: none; border-top: 1px solid #222; }
             .checkout-container { border-radius: 0; width: 100%; margin-top: 40px; }
         }
