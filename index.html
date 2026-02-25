@@ -1,35 +1,53 @@
-<div id="checkoutGamer" class="checkout-overlay">
-    <div class="checkout-card">
-        <div class="checkout-header">
-            <span class="brand-name">O ARSENAL <span class="red-text">DE GAMES</span></span>
-            <button class="close-btn" onclick="toggleCheckout()">&times;</button>
-        </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMEFLIX</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
 
-        <div class="checkout-body">
-            <div class="product-preview">
-                <img id="checkout-img" src="" alt="Produto">
-                <div class="product-details">
-                    <h3 id="checkout-title">Nome do Jogo</h3>
-                    <p class="status-online">● Entrega Instantânea</p>
-                </div>
+    <div id="netflixModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <iframe id="modalVideo" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <div class="modal-info">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDesc"></p>
+                <button class="buy-now-btn" onclick="toggleCheckout('Gameflix VIP', './sua-capa.jpg')">ASSINAR AGORA</button>
             </div>
-
-            <div class="input-group">
-                <label>QUEM VAI RECEBER?</label>
-                <input type="text" placeholder="Seu nome completo">
-                <input type="email" placeholder="Seu melhor e-mail">
-            </div>
-
-            <div class="price-section">
-                <span>Total:</span>
-                <span class="price-val">R$ 29,90</span>
-            </div>
-
-            <button class="buy-now-btn">FINALIZAR AGORA</button>
-        </div>
-        
-        <div class="checkout-footer">
-            <p>🛡️ Compra 100% Segura e Criptografada</p>
         </div>
     </div>
-</div>
+
+    <div id="checkoutGamer" class="checkout-overlay">
+        <div class="checkout-card">
+            <div class="checkout-header">
+                <span class="brand-name">GAME<span class="red-text">FLIX</span></span>
+                <button class="close-btn" onclick="toggleCheckout()">&times;</button>
+            </div>
+            <div class="checkout-body">
+                <div class="product-preview">
+                    <img id="checkout-img" src="" alt="Produto">
+                    <div class="product-details">
+                        <h3 id="checkout-title">Acesso VIP</h3>
+                        <p class="status-online">● Entrega Instantânea</p>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>DADOS DE ACESSO</label>
+                    <input type="text" placeholder="Seu nome completo">
+                    <input type="email" placeholder="Seu melhor e-mail">
+                </div>
+                <div class="price-section">
+                    <span>Total:</span>
+                    <span class="price-val">R$ 29,90</span>
+                </div>
+                <button class="confirm-purchase-btn">FINALIZAR NO WHATSAPP</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
