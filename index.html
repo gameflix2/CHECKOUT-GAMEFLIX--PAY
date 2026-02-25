@@ -1,53 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMEFLIX</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-
-    <div id="netflixModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <iframe id="modalVideo" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            <div class="modal-info">
-                <h2 id="modalTitle"></h2>
-                <p id="modalDesc"></p>
-                <button class="buy-now-btn" onclick="toggleCheckout('Gameflix VIP', './sua-capa.jpg')">ASSINAR AGORA</button>
-            </div>
+<div id="checkoutGamer" class="checkout-overlay">
+    <div class="cakto-style-container">
+        <div class="step-bar">
+            <div class="step active"><span>1</span> Dados</div>
+            <div class="step-line"></div>
+            <div class="step"><span>2</span> Pagamento</div>
         </div>
-    </div>
 
-    <div id="checkoutGamer" class="checkout-overlay">
-        <div class="checkout-card">
-            <div class="checkout-header">
-                <span class="brand-name">GAME<span class="red-text">FLIX</span></span>
-                <button class="close-btn" onclick="toggleCheckout()">&times;</button>
-            </div>
-            <div class="checkout-body">
-                <div class="product-preview">
-                    <img id="checkout-img" src="" alt="Produto">
-                    <div class="product-details">
-                        <h3 id="checkout-title">Acesso VIP</h3>
-                        <p class="status-online">● Entrega Instantânea</p>
+        <div class="checkout-flex">
+            <div class="checkout-side-info">
+                <div class="brand-header">
+                    <span class="logo-text">GAME<span class="red-text">FLIX</span></span>
+                </div>
+                <div class="product-box">
+                    <img id="checkout-img" src="" alt="Capa">
+                    <div class="product-txt">
+                        <h3 id="checkout-title">Nome do Jogo</h3>
+                        <p>Plano Premium - Acesso Vitalício</p>
+                        <span class="badge-instant">Entrega Instantânea</span>
                     </div>
                 </div>
-                <div class="input-group">
-                    <label>DADOS DE ACESSO</label>
-                    <input type="text" placeholder="Seu nome completo">
-                    <input type="email" placeholder="Seu melhor e-mail">
+                <div class="total-box">
+                    <span>Total a pagar:</span>
+                    <span class="final-price">R$ 29,90</span>
                 </div>
-                <div class="price-section">
-                    <span>Total:</span>
-                    <span class="price-val">R$ 29,90</span>
+            </div>
+
+            <div class="checkout-form-side">
+                <button class="close-checkout" onclick="toggleCheckout()">&times;</button>
+                <h3>Informações Pessoais</h3>
+                <p class="subtitle">Preencha os dados abaixo para receber seu acesso.</p>
+                
+                <div class="input-group-cakto">
+                    <label>Nome Completo</label>
+                    <input type="text" placeholder="Digite seu nome...">
                 </div>
-                <button class="confirm-purchase-btn">FINALIZAR NO WHATSAPP</button>
+                <div class="input-group-cakto">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="exemplo@email.com">
+                </div>
+                <div class="input-group-cakto">
+                    <label>WhatsApp (Opcional)</label>
+                    <input type="tel" placeholder="(00) 00000-0000">
+                </div>
+
+                <button class="next-step-btn">CONTINUAR PARA PAGAMENTO</button>
+                
+                <div class="secure-footer">
+                    <span>🔒 Ambiente Seguro</span>
+                    <span>⭐ Compra Garantida</span>
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="./script.js"></script>
-</body>
-</html>
+</div>
