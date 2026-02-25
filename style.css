@@ -1,55 +1,66 @@
-J7JJJ/* --- ESTILOS GERAIS (MANTENHA OS SEUS) --- */
-/* ... seu CSS de Desktop aqui ... */
+/* --- 1. ESTILOS GERAIS --- */
+/* Mantenha seus estilos de desktop aqui */
 
-/* --- CHECKOUT GAMER --- */
-.checkout-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.95); z-index: 3000; backdrop-filter: blur(10px);
-    align-items: center; justify-content: center;
-}
-.checkout-card {
-    background: #181818; width: 90%; max-width: 400px; border-radius: 12px;
-    border: 1px solid #333; padding: 25px; color: white;
-}
-.red-text { color: #e50914; }
-.product-preview { display: flex; gap: 15px; background: #222; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-#checkout-img { width: 60px; height: 80px; object-fit: cover; }
-.input-group input { width: 100%; padding: 12px; margin-bottom: 10px; background: #333; border: none; color: white; border-radius: 4px; }
-.confirm-purchase-btn { width: 100%; padding: 15px; background: #e50914; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-
-/* --- AJUSTE MOBILE FINAL (PADRÃO NETFLIX) --- */
+/* --- 2. AJUSTE MOBILE (PADRÃO NETFLIX) --- */
 @media (max-width: 768px) {
     .top10-banner { margin-bottom: 20px !important; }
     .row h2 { font-size: 1.1rem !important; margin-bottom: 10px !important; padding-left: 15px; }
 
     .card-container {
- J7NU      position: relative; min-width: 45% !important; margin-right: 5px !important;
-        display: flex; align-items: center;
+        position: relative; 
+        min-width: 45% !important; 
+        margin-right: 5px !important;
+        display: flex; 
+        align-items: center;
     }
+    
     .rank-number {
-        font-size: 160px !important; position: absolute !important; left: -25px !important;
-        z-index: 1 !important; color: transparent !important;
-        -webkit-text-stroke: 2px #555 !important; font-weight: bold;
+        font-size: 160px !important; 
+        position: absolute !important; 
+        left: -25px !important;
+        z-index: 1 !important; 
+        color: transparent !important;
+        -webkit-text-stroke: 2px #555 !important; 
+        font-weight: bold;
     }
+    
     .poster-img {
-        z-index: 2 !important; position: relative; width: 100% !important;
-        height: 180px !important; object-fit: cover; margin-left: 35px;
+        z-index: 2 !important; 
+        position: relative; 
+        width: 100% !important;
+        height: 180px !important; 
+        object-fit: cover; 
+        margin-left: 35px;
     }
+    
     .game-card { min-width: 31% !important; height: 160px !important; flex-shrink: 0; }
     .games-scroll, .top-10-scroll { display: flex !important; overflow-x: auto !important; gap: 12px !important; padding: 10px 15px !important; }
     .games-scroll::-webkit-scrollbar { display: none; }
 }
 
-/* --- CHECKOUT ESTILO CAKTO PARA GAMEFLIX --- */
+/* --- 3. CHECKOUT ESTILO CAKTO (UNIFICADO) --- */
 .checkout-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #0a0a0a; z-index: 5000; align-items: center; justify-content: center;
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: #0a0a0a; 
+    z-index: 5000; 
+    align-items: center; 
+    justify-content: center;
     font-family: 'Segoe UI', sans-serif;
+    backdrop-filter: blur(10px);
 }
 
 .cakto-style-container {
-    background: #141414; width: 100%; max-width: 900px; border-radius: 15px;
-    overflow: hidden; border: 1px solid #222; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    background: #141414; 
+    width: 100%; 
+    max-width: 900px; 
+    border-radius: 15px;
+    overflow: hidden; 
+    border: 1px solid #222; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    color: white;
 }
 
 /* Barra de Passos */
@@ -74,26 +85,4 @@ J7JJJ/* --- ESTILOS GERAIS (MANTENHA OS SEUS) --- */
 .input-group-cakto input {
     width: 100%; padding: 14px; background: #1a1a1a; border: 1px solid #333;
     border-radius: 8px; color: #fff; transition: 0.3s;
-}
-.input-group-cakto input:focus { border-color: #e50914; outline: none; background: #222; }
-
-/* Botão Próximo */
-.next-step-btn {
-    width: 100%; padding: 18px; background: #e50914; color: #fff; border: none;
-    border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px;
-}
-
-/* Info do Produto */
-.product-box { display: flex; gap: 15px; margin: 30px 0; padding-bottom: 20px; border-bottom: 1px solid #222; }
-#checkout-img { width: 70px; height: 95px; border-radius: 6px; object-fit: cover; }
-.badge-instant { background: rgba(70, 211, 105, 0.1); color: #46d369; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; }
-.final-price { font-size: 1.8rem; font-weight: bold; color: #fff; }
-
-.close-checkout { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #666; font-size: 1.5rem; cursor: pointer; }
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .checkout-side-info { order: 2; padding: 25px; }
-    .checkout-form-side { order: 1; padding: 25px; }
-    .cakto-style-container { height: 100vh; border-radius: 0; }
 }
