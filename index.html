@@ -261,7 +261,7 @@
 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="color:#888;">Total:</span>
-                  <h2 id="valor-pago" style="margin:0; font-family: 'Bebas Neue'; font-size: 2rem;">R$ 0,00</h2>
+                <h2 id="valor-pago" style="margin:0; font-family: 'Bebas Neue'; font-size: 2rem;">R$ 0,00</h2>
                 </div>
             </div>
 
@@ -365,7 +365,18 @@ if (valorDaUrl) {
         elementoPreco.innerText = `R$ ${valorDaUrl}`;
     }
 }
+        // SCRIPT PARA RECEBER O VALOR
+const urlParams = new URLSearchParams(window.location.search);
+const valorDaUrl = urlParams.get('valor');
+
+if (valorDaUrl) {
+    const elementoPreco = document.getElementById('valor-pago');
+    if (elementoPreco) {
+        elementoPreco.innerText = `R$ ${valorDaUrl}`;
+    }
+}
     </script>
 </body>
 </html>
+
 
