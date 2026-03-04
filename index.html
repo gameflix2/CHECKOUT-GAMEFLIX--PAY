@@ -246,39 +246,45 @@
             document.getElementById('step2-label').classList.remove('active');
         }
 
-        async function gerarPagamento() {
-            const btn = document.getElementById('btn-finalizar');
-            const email = document.getElementById('customer-email').value;
-            const phone = document.getElementById('customer-phone').value;
+ async function gerarPagamento() {
+    const btn = document.getElementById('btn-finalizar');
+    const email = document.getElementById('customer-email').value;
+    const phone = document.getElementById('customer-phone').value;
+    
+    // CAPTURA O VALOR QUE ESTÁ NA TELA NO MOMENTO (Ex: 84,90)
+    const valorNaTela = document.getElementById('valor-pago').innerText;
 
-            btn.disabled = true;
-            btn.innerText = "GERANDO PIX...";
+    btn.disabled = true;
+    btn.innerText = "GERANDO PIX...";
 
-            try {
-                const response = await fetch(URL_SUPABASE, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, phone })
-                });
+    try {
+        const response = await fetch(URL_SUPABASE, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                email: email, 
+                phone: phone,
+                amount: valorNaTela // <--- AGORA ENVIA O VALOR CORRETO DO COMBO
+            })
+        });
 
-                const data = await response.json();
+        const data = await response.json();
 
-                if (data.qr_code) {
-                    btn.style.display = 'none';
-                    document.getElementById('pix-display').style.display = 'block';
-                    document.getElementById('pix-qr').src = `data:image/jpeg;base64,${data.qr_code_base64}`;
-                    document.getElementById('pix-copy').value = data.copy_paste;
-                } else {
-                    alert("Erro ao gerar pagamento. Tente novamente.");
-                    btn.disabled = false;
-                    btn.innerText = "FINALIZAR COMPRA";
-                }
-            } catch (err) {
-                console.error(err);
-                alert("Erro de conexão!");
-                btn.disabled = false;
-            }
+        if (data.qr_code) {
+            btn.style.display = 'none';
+            document.getElementById('pix-display').style.display = 'block';
+            document.getElementById('pix-qr').src = `data:image/jpeg;base64,${data.qr_code_base64}`;
+            document.getElementById('pix-copy').value = data.copy_paste;
+        } else {
+            alert("Erro ao gerar pagamento. Verifique se o e-mail é válido.");
+            btn.disabled = false;
+            btn.innerText = "FINALIZAR COMPRA";
         }
+    } catch (err) {
+        alert("Erro de conexão!");
+        btn.disabled = false;
+    }
+}
 
         function copyPix() {
             const copyText = document.getElementById("pix-copy");
@@ -289,3 +295,4 @@
     </script>
 </body>
 </html>
+
