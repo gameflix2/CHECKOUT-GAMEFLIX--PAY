@@ -296,27 +296,26 @@
     </script>
 
 <script>
-// Captura parâmetros da URL
-const urlParams = new URLSearchParams(window.location.search);
+// Espera o HTML carregar completamente antes de tentar atualizar
+window.addEventListener('load', function() {
+    const urlParams = new URLSearchParams(window.location.search);
 
-const nomeJogo = urlParams.get('nome');
-const imagemJogo = urlParams.get('imagem');
-const valorJogo = urlParams.get('valor');
+    const nomeJogo = urlParams.get('nome');
+    const imagemJogo = urlParams.get('imagem');
+    const valorJogo = urlParams.get('valor');
 
-// Atualiza nome do jogo
-if (nomeJogo) {
-    document.getElementById('nome-jogo').textContent = decodeURIComponent(nomeJogo);
-}
+    if (nomeJogo) {
+        document.getElementById('nome-jogo').textContent = decodeURIComponent(nomeJogo);
+    }
 
-// Atualiza imagem do jogo
-if (imagemJogo) {
-    document.getElementById('capa-jogo').src = decodeURIComponent(imagemJogo);
-}
+    if (imagemJogo) {
+        document.getElementById('capa-jogo').src = decodeURIComponent(imagemJogo);
+    }
 
-// Atualiza valor
-if (valorJogo) {
-    document.getElementById('valor-pago').textContent = "R$ " + valorJogo;
-}
+    if (valorJogo) {
+        document.getElementById('valor-pago').textContent = "R$ " + valorJogo;
+    }
+});
 </script>
 
 </body>
