@@ -255,7 +255,8 @@
         async function gerarPagamento() {
             const btn = document.getElementById('btn-finalizar');
             const email = document.getElementById('customer-email').value;
-            const valor = document.getElementById('valor-pago').innerText;
+           let valor = document.getElementById('valor-pago').innerText;
+valor = valor.replace('R$', '').replace(',', '.').trim();
 
             btn.disabled = true;
             btn.innerText = "GERANDO PAGAMENTO...";
