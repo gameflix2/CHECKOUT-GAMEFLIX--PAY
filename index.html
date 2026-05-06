@@ -296,7 +296,7 @@
     </script>
 
 <script>
-// Captura parâmetros da URL (nome, imagem e valor)
+// Captura parâmetros da URL
 const urlParams = new URLSearchParams(window.location.search);
 
 const nomeJogo = urlParams.get('nome');
@@ -313,7 +313,7 @@ if (imagemJogo) {
     document.getElementById('capa-jogo').src = decodeURIComponent(imagemJogo);
 }
 
-// Atualiza valor (mantém o que já funcionava)
+// Atualiza valor
 if (valorJogo) {
     document.getElementById('valor-pago').textContent = "R$ " + valorJogo;
 }
