@@ -141,6 +141,19 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 2000;
         }
 
+        /* Caixa de erro detalhado */
+        #error-box {
+            display: none;
+            background: #1a0000;
+            border: 1px solid #e50914;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #ff8888;
+            word-break: break-all;
+        }
+
         @media (max-width: 768px) {
             .checkout-flex { flex-direction: column; }
             .checkout-container { border-radius: 0; width: 100%; margin-top: 40px; }
@@ -166,10 +179,10 @@
                 <div class="product-box">
                    <img id="capa-jogo" src="https://res.cloudinary.com/dlt1gqwnc/image/upload/v1772039414/pngtree-gamer-girl-streaming-online-isolated-on-transparent-background-png-image_16583366_pbl4v8.png" class="product-img">
                     <div class="product-info">
-    <h3 id="nome-jogo">NOME DO JOGO</h3>
-    <p id="subtitulo-jogo" style="color:#46d369; margin: 4px 0 8px 0;">PC GAMEFLIX</p>
-    <span style="color:#46d369; font-weight:bold; font-size:0.7rem">ENTREGA IMEDIATA</span>
-</div>
+                        <h3 id="nome-jogo">NOME DO JOGO</h3>
+                        <p id="subtitulo-jogo" style="color:#46d369; margin: 4px 0 8px 0;">PC GAMEFLIX</p>
+                        <span style="color:#46d369; font-weight:bold; font-size:0.7rem">ENTREGA IMEDIATA</span>
+                    </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -200,6 +213,9 @@
 
                     <button id="btn-finalizar" class="netflix-btn" onclick="gerarPagamento()">FINALIZAR COMPRA</button>
 
+                    <!-- Caixa de erro detalhado para debug -->
+                    <div id="error-box"></div>
+
                     <div id="pix-display">
                         <p style="font-weight: bold; color: #2ecc71; margin-top:0">PIX GERADO! ✅</p>
                         <img id="pix-qr" src="">
@@ -229,61 +245,121 @@
     <script>
         const URL_SUPABASE = "https://ybmsmvzwhsapznhgeomc.supabase.co/functions/v1/super-handler";
 
-        // Captura valor da URL
+        // ─── FIX 1: urlParams declarado UMA única vez ───────────────────────
         const urlParams = new URLSearchParams(window.location.search);
-        const valorUrl = urlParams.get('valor');
-        if (valorUrl) {
-            document.getElementById('valor-pago').innerText = "R$ " + valorUrl;
-        }
+
+        // Captura e aplica parâmetros da URL
+        const nomeJogo   = urlParams.get('nome');
+        const imagemJogo = urlParams.get('imagem');
+        const valorJogo  = urlParams.get('valor');
+
+        if (nomeJogo)   document.getElementById('nome-jogo').textContent = decodeURIComponent(nomeJogo);
+        if (imagemJogo) document.getElementById('capa-jogo').src = decodeURIComponent(imagemJogo);
+        if (valorJogo)  document.getElementById('valor-pago').textContent = "R$ " + valorJogo;
 
         // Timer
         let time = 599;
         setInterval(() => {
-            let min = Math.floor(time / 60); let sec = time % 60;
+            let min = Math.floor(time / 60);
+            let sec = time % 60;
             document.getElementById('timer').innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-            if(time > 0) time--;
+            if (time > 0) time--;
         }, 1000);
 
         function nextStep() {
             const email = document.getElementById('customer-email').value;
-            if(!email.includes('@')) return alert("Insira um e-mail válido!");
+            if (!email.includes('@')) return alert("Insira um e-mail válido!");
             document.getElementById('data-step').style.display = 'none';
             document.getElementById('payment-step').style.display = 'block';
             document.getElementById('step2-label').classList.add('active');
         }
 
-        async function gerarPagamento() {
-            const btn = document.getElementById('btn-finalizar');
-            const email = document.getElementById('customer-email').value;
-           let valor = document.getElementById('valor-pago').innerText;
-valor = valor.replace('R$', '').replace(',', '.').trim();
+        // ─── FIX 2: converte valor "R$ 29,90" → número 29.90 ───────────────
+        function extrairValorNumerico() {
+            const texto = document.getElementById('valor-pago').innerText;
+            // Remove "R$ ", espaços, troca vírgula por ponto
+            const limpo = texto.replace('R$', '').trim().replace(',', '.');
+            return parseFloat(limpo);
+        }
 
-            btn.disabled = true;
+        async function gerarPagamento() {
+            const btn   = document.getElementById('btn-finalizar');
+            const email = document.getElementById('customer-email').value;
+            const errorBox = document.getElementById('error-box');
+
+            // ─── FIX 2: envia valor como número, não como string ─────────────
+            const amount = extrairValorNumerico();
+
+            if (isNaN(amount) || amount <= 0) {
+                alert("Valor inválido! Verifique o preço do produto.");
+                return;
+            }
+
+            btn.disabled  = true;
             btn.innerText = "GERANDO PAGAMENTO...";
+            errorBox.style.display = 'none';
 
             try {
                 const response = await fetch(URL_SUPABASE, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, amount: valor })
+                    body: JSON.stringify({ email: email, amount: amount })
                 });
 
-                const data = await response.json();
-                if (data.qr_code) {
+                let data;
+                try {
+                    data = await response.json();
+                } catch (jsonErr) {
+                    // Servidor retornou algo que não é JSON (ex: HTML de erro)
+                    const texto = await response.text().catch(() => "Sem resposta");
+                    errorBox.style.display = 'block';
+                    errorBox.innerHTML = `<strong>Erro HTTP ${response.status}:</strong><br>${texto.substring(0, 400)}`;
+                    btn.disabled  = false;
+                    btn.innerText = "FINALIZAR COMPRA";
+                    return;
+                }
+
+                // ─── FIX 3: tenta jpeg e png para o QR Code ─────────────────
+                if (data.qr_code_base64 || data.qr_code) {
                     btn.style.display = 'none';
                     document.getElementById('pix-display').style.display = 'block';
-                    document.getElementById('pix-qr').src = `data:image/jpeg;base64,${data.qr_code_base64}`;
-                    document.getElementById('pix-copy').value = data.copy_paste;
+
+                    if (data.qr_code_base64) {
+                        // Tenta detectar o tipo de imagem pelo header base64 (PNG começa com iVBOR)
+                        const isPng = data.qr_code_base64.startsWith('iVBOR');
+                        const mime  = isPng ? 'image/png' : 'image/jpeg';
+                        document.getElementById('pix-qr').src = `data:${mime};base64,${data.qr_code_base64}`;
+                    } else if (data.qr_code) {
+                        // Mercado Pago às vezes retorna URL direto no campo qr_code
+                        document.getElementById('pix-qr').src = data.qr_code;
+                    }
+
+                    // O campo pode vir como copy_paste ou como payment_data.qr_code
+                    document.getElementById('pix-copy').value =
+                        data.copy_paste || data.qr_code || '';
+
                 } else {
-                    alert("Erro ao gerar PIX. Use um e-mail diferente da sua conta Mercado Pago.");
-                    btn.disabled = false; btn.innerText = "FINALIZAR COMPRA";
+                    // ─── FIX 4: exibe a mensagem de erro real do servidor ────
+                    const msgErro = data.message || data.error || data.detail || JSON.stringify(data);
+                    errorBox.style.display = 'block';
+                    errorBox.innerHTML = `<strong>Erro do servidor:</strong><br>${msgErro}`;
+                    btn.disabled  = false;
+                    btn.innerText = "FINALIZAR COMPRA";
                 }
-            } catch (e) { alert("Erro de conexão!"); btn.disabled = false; }
+
+            } catch (e) {
+                errorBox.style.display = 'block';
+                errorBox.innerHTML = `<strong>Erro de conexão:</strong><br>${e.message}`;
+                btn.disabled  = false;
+                btn.innerText = "FINALIZAR COMPRA";
+            }
         }
 
         function copyPix() {
-            const c = document.getElementById("pix-copy"); c.select(); 
-            document.execCommand("copy"); alert("Código Copiado!");
+            const c = document.getElementById("pix-copy");
+            c.select();
+            document.execCommand("copy");
+            alert("Código Copiado!");
         }
 
         // Prova Social
@@ -295,29 +371,6 @@ valor = valor.replace('R$', '').replace(',', '.').trim();
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
         }, 12000);
     </script>
-
-<script>
-// Espera o HTML carregar completamente antes de tentar atualizar
-window.addEventListener('load', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const nomeJogo = urlParams.get('nome');
-    const imagemJogo = urlParams.get('imagem');
-    const valorJogo = urlParams.get('valor');
-
-    if (nomeJogo) {
-        document.getElementById('nome-jogo').textContent = decodeURIComponent(nomeJogo);
-    }
-
-    if (imagemJogo) {
-        document.getElementById('capa-jogo').src = decodeURIComponent(imagemJogo);
-    }
-
-    if (valorJogo) {
-        document.getElementById('valor-pago').textContent = "R$ " + valorJogo;
-    }
-});
-</script>
 
 </body>
 </html>
