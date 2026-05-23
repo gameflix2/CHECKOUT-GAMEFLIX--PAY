@@ -12,6 +12,7 @@
             --bg-dark: #0a0a0a;
             --card-bg: #141414;
             --input-bg: #1a1a1a;
+            --green: #2ecc71;
         }
 
         body {
@@ -45,7 +46,6 @@
             margin-top: 50px; position: relative;
         }
 
-        /* BORDA ANIMADA PREMIUM */
         .checkout-container::before {
             content: ""; position: absolute;
             top: 0; left: 0; right: 0; height: 2px;
@@ -106,7 +106,6 @@
             box-sizing: border-box; font-size: 1rem;
         }
 
-        /* BOTÃO NETFLIX QUE BRILHA */
         .netflix-btn {
             display: block; width: 100%; padding: 20px 0;
             font-family: 'Bebas Neue', sans-serif; font-size: 24px;
@@ -130,6 +129,99 @@
         }
         #pix-qr { width: 180px; margin: 10px auto; display: block; border: 1px solid #eee; }
 
+        /* STATUS DE VERIFICAÇÃO */
+        #checking-status {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            margin-top: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .checking-dots {
+            display: inline-flex; gap: 5px; margin-left: 8px;
+        }
+        .checking-dots span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--netflix-red);
+            animation: blink 1.2s infinite;
+        }
+        .checking-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .checking-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* TELA DE PAGAMENTO CONFIRMADO */
+        #confirmed-screen {
+            display: none;
+            text-align: center;
+            padding: 30px 20px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .confirmed-check {
+            width: 70px; height: 70px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 35px;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .confirmed-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem; color: var(--green);
+            margin: 0 0 5px;
+            letter-spacing: 2px;
+        }
+
+        .confirmed-subtitle {
+            color: #888; font-size: 0.85rem; margin-bottom: 25px;
+        }
+
+        .confirmed-game-img {
+            width: 120px; height: 165px;
+            object-fit: cover; border-radius: 8px;
+            margin: 0 auto 15px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 2px solid var(--green);
+        }
+
+        .confirmed-game-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem; margin-bottom: 25px;
+            color: #fff;
+        }
+
+        .whatsapp-btn {
+            display: block; width: 100%; padding: 18px 0;
+            font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+            color: #fff; text-decoration: none;
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            border: none; border-radius: 8px; cursor: pointer;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+            transition: 0.3s;
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.6);
+        }
+
         .secure-footer { display: flex; justify-content: center; gap: 20px; margin-top: 25px; color: #444; font-size: 0.7rem; font-weight: bold; }
 
         /* TOAST NOTIFICAÇÃO */
@@ -139,19 +231,6 @@
             padding: 12px 18px; border-radius: 8px;
             display: none; align-items: center; gap: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 2000;
-        }
-
-        /* Caixa de erro detalhado */
-        #error-box {
-            display: none;
-            background: #1a0000;
-            border: 1px solid #e50914;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #ff8888;
-            word-break: break-all;
         }
 
         @media (max-width: 768px) {
@@ -174,10 +253,11 @@
         </div>
 
         <div class="checkout-flex">
+            <!-- SIDEBAR COM CAPA DO JOGO -->
             <div class="product-sidebar">
                 <span class="logo-gameflix">GAME<span>FLIX</span></span>
                 <div class="product-box">
-                   <img id="capa-jogo" src="https://res.cloudinary.com/dlt1gqwnc/image/upload/v1772039414/pngtree-gamer-girl-streaming-online-isolated-on-transparent-background-png-image_16583366_pbl4v8.png" class="product-img">
+                    <img id="capa-jogo" src="https://res.cloudinary.com/dlt1gqwnc/image/upload/v1772039414/pngtree-gamer-girl-streaming-online-isolated-on-transparent-background-png-image_16583366_pbl4v8.png" class="product-img">
                     <div class="product-info">
                         <h3 id="nome-jogo">NOME DO JOGO</h3>
                         <p id="subtitulo-jogo" style="color:#46d369; margin: 4px 0 8px 0;">PC GAMEFLIX</p>
@@ -191,7 +271,10 @@
                 </div>
             </div>
 
+            <!-- FORMULÁRIO -->
             <div class="form-content">
+
+                <!-- STEP 1: DADOS -->
                 <div id="data-step">
                     <h3 style="margin-top:0; font-family: 'Bebas Neue'; font-size: 1.8rem; letter-spacing: 1px;">PREPARA O TEU ACESSO</h3>
                     <div class="input-group">
@@ -205,6 +288,7 @@
                     <button class="netflix-btn" onclick="nextStep()">PRÓXIMO PASSO</button>
                 </div>
 
+                <!-- STEP 2: PAGAMENTO -->
                 <div id="payment-step" style="display: none;">
                     <h3 style="margin-top:0; font-family: 'Bebas Neue'; font-size: 1.8rem; letter-spacing: 1px;">PAGAMENTO SEGURO</h3>
                     <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:8px; border: 1px solid var(--netflix-red); margin-bottom: 20px;">
@@ -213,9 +297,7 @@
 
                     <button id="btn-finalizar" class="netflix-btn" onclick="gerarPagamento()">FINALIZAR COMPRA</button>
 
-                    <!-- Caixa de erro detalhado para debug -->
-                    <div id="error-box"></div>
-
+                    <!-- QR CODE PIX -->
                     <div id="pix-display">
                         <p style="font-weight: bold; color: #2ecc71; margin-top:0">PIX GERADO! ✅</p>
                         <img id="pix-qr" src="">
@@ -224,7 +306,36 @@
                         <button onclick="copyPix()" style="width: 100%; padding: 12px; background: #2ecc71; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px;">COPIAR CÓDIGO PIX</button>
                     </div>
 
+                    <!-- STATUS DE VERIFICAÇÃO -->
+                    <div id="checking-status">
+                        <p style="margin:0; font-size:0.85rem; color:#aaa;">
+                            Aguardando confirmação do pagamento
+                            <span class="checking-dots">
+                                <span></span><span></span><span></span>
+                            </span>
+                        </p>
+                        <p style="margin:5px 0 0; font-size:0.7rem; color:#555;">Verificando automaticamente a cada 5 segundos</p>
+                    </div>
+
                     <p onclick="location.reload()" style="text-align:center; color:#666; font-size:0.8rem; margin-top:15px; cursor:pointer;">← Voltar para dados</p>
+                </div>
+
+                <!-- TELA DE PAGAMENTO CONFIRMADO -->
+                <div id="confirmed-screen">
+                    <div class="confirmed-check">✓</div>
+                    <h2 class="confirmed-title">PAGAMENTO CONFIRMADO!</h2>
+                    <p class="confirmed-subtitle">Seu pagamento foi processado com sucesso.</p>
+
+                    <img id="confirmed-capa" src="" class="confirmed-game-img">
+                    <p class="confirmed-game-name" id="confirmed-nome"></p>
+
+                    <a id="whatsapp-link" href="#" target="_blank" class="whatsapp-btn">
+                        📲 CLIQUE AQUI PARA ACESSAR SEU JOGO
+                    </a>
+
+                    <p style="color:#555; font-size:0.75rem; margin-top:15px;">
+                        Você será atendido pelo nosso suporte via WhatsApp
+                    </p>
                 </div>
 
                 <div class="secure-footer">
@@ -235,6 +346,7 @@
         </div>
     </div>
 
+    <!-- TOAST PROVA SOCIAL -->
     <div class="purchase-toast" id="purchase-toast">
         <div style="background: var(--netflix-red); width: 10px; height: 10px; border-radius: 50%;"></div>
         <div style="font-size: 0.8rem; color: #fff;">
@@ -244,20 +356,20 @@
 
     <script>
         const URL_SUPABASE = "https://ybmsmvzwhsapznhgeomc.supabase.co/functions/v1/super-handler";
+        const WHATSAPP_NUMBER = "5553981021909";
 
-        // ─── FIX 1: urlParams declarado UMA única vez ───────────────────────
+        // Captura parâmetros da URL
         const urlParams = new URLSearchParams(window.location.search);
+        const nomeJogo   = urlParams.get('nome')   ? decodeURIComponent(urlParams.get('nome'))   : 'JOGO GAMEFLIX';
+        const imagemJogo = urlParams.get('imagem') ? decodeURIComponent(urlParams.get('imagem')) : '';
+        const valorJogo  = urlParams.get('valor')  || '29,90';
 
-        // Captura e aplica parâmetros da URL
-        const nomeJogo   = urlParams.get('nome');
-        const imagemJogo = urlParams.get('imagem');
-        const valorJogo  = urlParams.get('valor');
+        // Preenche sidebar
+        document.getElementById('nome-jogo').textContent = nomeJogo;
+        if (imagemJogo) document.getElementById('capa-jogo').src = imagemJogo;
+        document.getElementById('valor-pago').textContent = "R$ " + valorJogo;
 
-        if (nomeJogo)   document.getElementById('nome-jogo').textContent = decodeURIComponent(nomeJogo);
-        if (imagemJogo) document.getElementById('capa-jogo').src = decodeURIComponent(imagemJogo);
-        if (valorJogo)  document.getElementById('valor-pago').textContent = "R$ " + valorJogo;
-
-        // Timer
+        // Timer de urgência
         let time = 599;
         setInterval(() => {
             let min = Math.floor(time / 60);
@@ -266,6 +378,7 @@
             if (time > 0) time--;
         }, 1000);
 
+        // Step 1 → Step 2
         function nextStep() {
             const email = document.getElementById('customer-email').value;
             if (!email.includes('@')) return alert("Insira um e-mail válido!");
@@ -274,85 +387,93 @@
             document.getElementById('step2-label').classList.add('active');
         }
 
-        // ─── FIX 2: converte valor "R$ 29,90" → número 29.90 ───────────────
-        function extrairValorNumerico() {
-            const texto = document.getElementById('valor-pago').innerText;
-            // Remove "R$ ", espaços, troca vírgula por ponto
-            const limpo = texto.replace('R$', '').trim().replace(',', '.');
-            return parseFloat(limpo);
-        }
+        // Variável global para o polling
+        let pollingInterval = null;
 
+        // Gera o pagamento Pix
         async function gerarPagamento() {
             const btn   = document.getElementById('btn-finalizar');
             const email = document.getElementById('customer-email').value;
-            const errorBox = document.getElementById('error-box');
+            const valor = document.getElementById('valor-pago').innerText;
 
-            // ─── FIX 2: envia valor como número, não como string ─────────────
-            const amount = extrairValorNumerico();
-
-            if (isNaN(amount) || amount <= 0) {
-                alert("Valor inválido! Verifique o preço do produto.");
-                return;
-            }
-
-            btn.disabled  = true;
+            btn.disabled = true;
             btn.innerText = "GERANDO PAGAMENTO...";
-            errorBox.style.display = 'none';
 
             try {
                 const response = await fetch(URL_SUPABASE, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, amount: amount })
+                    body: JSON.stringify({ email: email, amount: valor })
                 });
 
-                let data;
-                try {
-                    data = await response.json();
-                } catch (jsonErr) {
-                    // Servidor retornou algo que não é JSON (ex: HTML de erro)
-                    const texto = await response.text().catch(() => "Sem resposta");
-                    errorBox.style.display = 'block';
-                    errorBox.innerHTML = `<strong>Erro HTTP ${response.status}:</strong><br>${texto.substring(0, 400)}`;
-                    btn.disabled  = false;
-                    btn.innerText = "FINALIZAR COMPRA";
-                    return;
-                }
+                const data = await response.json();
 
-                // ─── FIX 3: tenta jpeg e png para o QR Code ─────────────────
-                if (data.qr_code_base64 || data.qr_code) {
+                if (data.qr_code) {
                     btn.style.display = 'none';
+
+                    // Mostra o QR Code
                     document.getElementById('pix-display').style.display = 'block';
+                    document.getElementById('pix-qr').src = `data:image/jpeg;base64,${data.qr_code_base64}`;
+                    document.getElementById('pix-copy').value = data.copy_paste;
 
-                    if (data.qr_code_base64) {
-                        // Tenta detectar o tipo de imagem pelo header base64 (PNG começa com iVBOR)
-                        const isPng = data.qr_code_base64.startsWith('iVBOR');
-                        const mime  = isPng ? 'image/png' : 'image/jpeg';
-                        document.getElementById('pix-qr').src = `data:${mime};base64,${data.qr_code_base64}`;
-                    } else if (data.qr_code) {
-                        // Mercado Pago às vezes retorna URL direto no campo qr_code
-                        document.getElementById('pix-qr').src = data.qr_code;
-                    }
+                    // Mostra o status de verificação
+                    document.getElementById('checking-status').style.display = 'block';
 
-                    // O campo pode vir como copy_paste ou como payment_data.qr_code
-                    document.getElementById('pix-copy').value =
-                        data.copy_paste || data.qr_code || '';
+                    // Inicia o polling com o payment_id
+                    iniciarPolling(data.payment_id);
 
                 } else {
-                    // ─── FIX 4: exibe a mensagem de erro real do servidor ────
-                    const msgErro = data.message || data.error || data.detail || JSON.stringify(data);
-                    errorBox.style.display = 'block';
-                    errorBox.innerHTML = `<strong>Erro do servidor:</strong><br>${msgErro}`;
-                    btn.disabled  = false;
+                    alert("Erro ao gerar PIX. Use um e-mail diferente da sua conta Mercado Pago.");
+                    btn.disabled = false;
                     btn.innerText = "FINALIZAR COMPRA";
                 }
-
             } catch (e) {
-                errorBox.style.display = 'block';
-                errorBox.innerHTML = `<strong>Erro de conexão:</strong><br>${e.message}`;
-                btn.disabled  = false;
+                alert("Erro de conexão!");
+                btn.disabled = false;
                 btn.innerText = "FINALIZAR COMPRA";
             }
+        }
+
+        // Polling: verifica status a cada 5 segundos
+        function iniciarPolling(paymentId) {
+            pollingInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(URL_SUPABASE, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: "check", payment_id: paymentId })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.status === "approved") {
+                        clearInterval(pollingInterval);
+                        mostrarConfirmacao();
+                    }
+                } catch (e) {
+                    console.error("Erro ao verificar pagamento:", e);
+                }
+            }, 5000); // verifica a cada 5 segundos
+        }
+
+        // Exibe a tela de pagamento confirmado
+        function mostrarConfirmacao() {
+            // Esconde tudo do pagamento
+            document.getElementById('payment-step').style.display = 'none';
+
+            // Monta a mensagem do WhatsApp
+            const mensagem = encodeURIComponent(
+                `Olá! Acabei de pagar o ${nomeJogo} na Gameflix. Pode me enviar o link de download? 🎮`
+            );
+            const wppLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensagem}`;
+            document.getElementById('whatsapp-link').href = wppLink;
+
+            // Preenche capa e nome na tela de confirmação
+            document.getElementById('confirmed-capa').src = imagemJogo;
+            document.getElementById('confirmed-nome').textContent = nomeJogo;
+
+            // Mostra a tela de confirmação
+            document.getElementById('confirmed-screen').style.display = 'block';
         }
 
         function copyPix() {
